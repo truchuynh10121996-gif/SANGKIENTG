@@ -1,4 +1,4 @@
-const textToSpeech = require('@google-cloud/text-to-speech');
+const TextToSpeech = require('@google-cloud/text-to-speech');
 const fs = require('fs');
 const util = require('util');
 
@@ -7,7 +7,7 @@ let ttsClient;
 
 try {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-    ttsClient = new textToSpeech.TextToSpeechClient();
+    ttsClient = new TextToSpeech.TextToSpeechClient();
   }
 } catch (error) {
   console.warn('Google Cloud TTS not configured. Using fallback.');
