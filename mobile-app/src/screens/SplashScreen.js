@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet, Animated, Dimensions } from 'react-native';
+import { View, Image, StyleSheet, Animated, useWindowDimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const { width, height } = Dimensions.get('window');
-
 export default function SplashScreen({ navigation }) {
+  const { width } = useWindowDimensions();
   const fadeAnim = new Animated.Value(0);
   const scaleAnim = new Animated.Value(0.5);
 
@@ -50,7 +49,7 @@ export default function SplashScreen({ navigation }) {
       >
         <Image
           source={require('../../assets/logo-agribank.png')}
-          style={styles.logo}
+          style={[styles.logo, { width: width * 0.5, height: width * 0.5 }]}
           resizeMode="contain"
         />
       </Animated.View>
@@ -94,8 +93,7 @@ const styles = StyleSheet.create({
     elevation: 8
   },
   logo: {
-    width: width * 0.5,
-    height: width * 0.5
+    // Width and height are set dynamically based on window dimensions
   },
   title: {
     fontSize: 24,
