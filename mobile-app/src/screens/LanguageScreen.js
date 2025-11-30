@@ -80,7 +80,7 @@ export default function LanguageScreen({ navigation }) {
           activeOpacity={0.8}
         >
           <LinearGradient
-            colors={['#2E7D32', '#1B5E20']}
+            colors={['#FF8DAD', '#FF6B99']}
             style={styles.continueButtonGradient}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
@@ -106,13 +106,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2E7D32',
+    color: '#FF8DAD',
     marginBottom: 5,
     textAlign: 'center'
   },
   subtitle: {
     fontSize: 18,
-    color: '#1B5E20',
+    color: '#FF6B99',
     marginBottom: 40,
     textAlign: 'center'
   },
@@ -139,8 +139,8 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   languageCardSelected: {
-    borderColor: '#2E7D32',
-    backgroundColor: 'rgba(46, 125, 50, 0.1)'
+    borderColor: '#FF8DAD',
+    backgroundColor: 'rgba(255, 141, 173, 0.1)'
   },
   flag: {
     fontSize: 40,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   languageName: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#1B5E20',
+    color: '#FF6B99',
     flex: 1
   },
   greeting: {

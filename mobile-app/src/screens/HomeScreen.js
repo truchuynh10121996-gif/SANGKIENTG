@@ -90,7 +90,7 @@ export default function HomeScreen({ navigation }) {
             style={styles.languageButton}
             onPress={handleChangeLanguage}
           >
-            <Ionicons name="language" size={24} color="#2E7D32" />
+            <Ionicons name="language" size={24} color="#FF8DAD" />
             <Text style={styles.languageButtonText}>{text.changeLanguage}</Text>
           </TouchableOpacity>
         </View>
@@ -111,22 +111,22 @@ export default function HomeScreen({ navigation }) {
 
             <View style={styles.featuresGrid}>
               <View style={styles.featureCard}>
-                <Ionicons name="shield-checkmark" size={40} color="#2E7D32" />
+                <Ionicons name="shield-checkmark" size={40} color="#FF8DAD" />
                 <Text style={styles.featureText}>{text.feature1}</Text>
               </View>
 
               <View style={styles.featureCard}>
-                <Ionicons name="globe" size={40} color="#2E7D32" />
+                <Ionicons name="globe" size={40} color="#FF8DAD" />
                 <Text style={styles.featureText}>{text.feature2}</Text>
               </View>
 
               <View style={styles.featureCard}>
-                <Ionicons name="mic" size={40} color="#2E7D32" />
+                <Ionicons name="mic" size={40} color="#FF8DAD" />
                 <Text style={styles.featureText}>{text.feature3}</Text>
               </View>
 
               <View style={styles.featureCard}>
-                <Ionicons name="volume-high" size={40} color="#2E7D32" />
+                <Ionicons name="volume-high" size={40} color="#FF8DAD" />
                 <Text style={styles.featureText}>{text.feature4}</Text>
               </View>
             </View>
@@ -138,7 +138,7 @@ export default function HomeScreen({ navigation }) {
             activeOpacity={0.8}
           >
             <LinearGradient
-              colors={['#2E7D32', '#1B5E20']}
+              colors={['#FF8DAD', '#FF6B99']}
               style={styles.startButtonGradient}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   },
   languageButtonText: {
     marginLeft: 5,
-    color: '#2E7D32',
+    color: '#FF8DAD',
     fontWeight: '600'
   },
   content: {
@@ -192,13 +192,13 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#2E7D32',
+    color: '#FF8DAD',
     marginTop: 20
   },
   subtitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#1B5E20',
+    color: '#FF6B99',
     marginTop: 10,
     textAlign: 'center'
   },
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   featuresTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#2E7D32',
+    color: '#FF8DAD',
     marginBottom: 15
   },
   featuresGrid: {
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   featureText: {
     marginTop: 10,
     fontSize: 14,
-    color: '#1B5E20',
+    color: '#FF6B99',
     textAlign: 'center',
     fontWeight: '600'
   },

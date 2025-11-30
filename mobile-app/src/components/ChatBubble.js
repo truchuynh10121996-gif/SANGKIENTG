@@ -94,12 +94,12 @@ export default function ChatBubble({ message, language }) {
                 disabled={isLoadingAudio}
               >
                 {isLoadingAudio ? (
-                  <ActivityIndicator size="small" color="#2E7D32" />
+                  <ActivityIndicator size="small" color="#FF8DAD" />
                 ) : (
                   <Ionicons
                     name={isPlayingAudio ? 'stop-circle' : 'volume-high'}
                     size={20}
-                    color="#2E7D32"
+                    color="#FF8DAD"
                   />
                 )}
               </TouchableOpacity>
@@ -108,7 +108,7 @@ export default function ChatBubble({ message, language }) {
         </View>
       ) : (
         <LinearGradient
-          colors={['#2E7D32', '#1B5E20']}
+          colors={['#FF8DAD', '#FF6B99']}
           style={[styles.bubble, styles.userBubble]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}

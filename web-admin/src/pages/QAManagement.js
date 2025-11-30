@@ -141,7 +141,7 @@ export default function QAManagement() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4" sx={{ fontWeight: 700, color: '#2E7D32' }}>
+        <Typography variant="h4" sx={{ fontWeight: 700, color: '#FF8DAD' }}>
           📝 Quản lý Q&A
         </Typography>
         <Stack direction="row" spacing={2}>
@@ -150,7 +150,7 @@ export default function QAManagement() {
             startIcon={<Add />}
             onClick={() => handleOpenDialog()}
             sx={{
-              background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)',
+              background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)',
               boxShadow: '0 4px 12px rgba(46, 125, 50, 0.3)'
             }}
           >
@@ -159,7 +159,7 @@ export default function QAManagement() {
           <Button
             variant="outlined"
             onClick={handleTrain}
-            sx={{ borderColor: '#2E7D32', color: '#2E7D32' }}
+            sx={{ borderColor: '#FF8DAD', color: '#FF8DAD' }}
           >
             🤖 Huấn luyện Chatbot
           </Button>
@@ -168,7 +168,7 @@ export default function QAManagement() {
 
       <TableContainer component={Paper} sx={{ borderRadius: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <Table>
-          <TableHead sx={{ bgcolor: '#2E7D32' }}>
+          <TableHead sx={{ bgcolor: '#FF8DAD' }}>
             <TableRow>
               <TableCell sx={{ color: '#fff', fontWeight: 700 }}>Câu hỏi</TableCell>
               <TableCell sx={{ color: '#fff', fontWeight: 700 }}>Ngôn ngữ</TableCell>
@@ -203,7 +203,7 @@ export default function QAManagement() {
                   {qa.isFraudScenario ? (
                     <Warning sx={{ color: '#D32F2F' }} />
                   ) : (
-                    <CheckCircle sx={{ color: '#2E7D32' }} />
+                    <CheckCircle sx={{ color: '#FF8DAD' }} />
                   )}
                 </TableCell>
                 <TableCell>
@@ -230,7 +230,7 @@ export default function QAManagement() {
 
       {/* Dialog */}
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
-        <DialogTitle sx={{ bgcolor: '#2E7D32', color: '#fff', fontWeight: 700 }}>
+        <DialogTitle sx={{ bgcolor: '#FF8DAD', color: '#fff', fontWeight: 700 }}>
           {editingQA ? 'Chỉnh sửa Q&A' : 'Thêm Q&A mới'}
         </DialogTitle>
         <DialogContent sx={{ mt: 2 }}>
@@ -305,7 +305,7 @@ export default function QAManagement() {
           <Button
             variant="contained"
             onClick={handleSubmit}
-            sx={{ background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)' }}
+            sx={{ background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)' }}
           >
             {editingQA ? 'Cập nhật' : 'Thêm mới'}
           </Button>

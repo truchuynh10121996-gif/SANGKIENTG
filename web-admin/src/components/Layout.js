@@ -41,7 +41,7 @@ export default function Layout({ children }) {
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
           ml: `${drawerWidth}px`,
-          background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)',
+          background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)',
           boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
         }}
       >
@@ -75,10 +75,10 @@ export default function Layout({ children }) {
             background: 'linear-gradient(135deg, #FBD6E3 0%, #A9EDE9 100%)'
           }}
         >
-          <Typography variant="h5" sx={{ fontWeight: 700, color: '#2E7D32' }}>
+          <Typography variant="h5" sx={{ fontWeight: 700, color: '#FF8DAD' }}>
             🛡️ Digital Guard
           </Typography>
-          <Typography variant="body2" sx={{ color: '#1B5E20', mt: 0.5 }}>
+          <Typography variant="body2" sx={{ color: '#FF6B99', mt: 0.5 }}>
             Admin Panel
           </Typography>
         </Box>
@@ -94,18 +94,18 @@ export default function Layout({ children }) {
                 sx={{
                   borderRadius: 2,
                   '&.Mui-selected': {
-                    background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)',
+                    background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)',
                     color: '#fff',
                     '& .MuiListItemIcon-root': {
                       color: '#fff'
                     },
                     '&:hover': {
-                      background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)'
+                      background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)'
                     }
                   }
                 }}
               >
-                <ListItemIcon sx={{ color: '#2E7D32' }}>
+                <ListItemIcon sx={{ color: '#FF8DAD' }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText

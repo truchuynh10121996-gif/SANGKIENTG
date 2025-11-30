@@ -79,7 +79,7 @@ export default function ChatbotPreview() {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#2E7D32' }}>
+      <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#FF8DAD' }}>
         💬 Xem trước Chatbot
       </Typography>
 
@@ -97,7 +97,7 @@ export default function ChatbotPreview() {
         <Box
           sx={{
             p: 2,
-            background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)',
+            background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)',
             color: '#fff'
           }}
         >
@@ -133,7 +133,7 @@ export default function ChatbotPreview() {
                   p: 2,
                   borderRadius: 2,
                   background: message.sender === 'user'
-                    ? 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)'
+                    ? 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)'
                     : '#fff',
                   color: message.sender === 'user' ? '#fff' : '#333',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
@@ -203,7 +203,7 @@ export default function ChatbotPreview() {
               onClick={handleSendMessage}
               disabled={!inputText.trim() || isLoading}
               sx={{
-                background: 'linear-gradient(90deg, #2E7D32 0%, #1B5E20 100%)',
+                background: 'linear-gradient(90deg, #FF8DAD 0%, #FF6B99 100%)',
                 minWidth: 120
               }}
             >
