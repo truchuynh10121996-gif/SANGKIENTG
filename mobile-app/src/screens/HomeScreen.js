@@ -4,15 +4,13 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
   Image,
   ScrollView
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const { width, height } = Dimensions.get('window');
 
 const TRANSLATIONS = {
   vi: {
@@ -54,6 +52,7 @@ const TRANSLATIONS = {
 };
 
 export default function HomeScreen({ navigation }) {
+  const { width } = useWindowDimensions();
   const [language, setLanguage] = useState('vi');
   const [text, setText] = useState(TRANSLATIONS.vi);
 
@@ -98,7 +97,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.content}>
           <Image
             source={require('../../assets/logo-agribank.png')}
-            style={styles.logo}
+            style={[styles.logo, { width: width * 0.4, height: width * 0.4 }]}
             resizeMode="contain"
           />
 
@@ -185,9 +184,8 @@ const styles = StyleSheet.create({
     paddingBottom: 30
   },
   logo: {
-    width: width * 0.4,
-    height: width * 0.4,
-    marginTop: 20
+    marginTop: 20,
+    // Width and height are set dynamically based on window dimensions
   },
   welcome: {
     fontSize: 32,
