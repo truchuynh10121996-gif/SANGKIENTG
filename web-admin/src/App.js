@@ -14,14 +14,14 @@ import Layout from './components/Layout';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2E7D32',
-      light: '#4CAF50',
-      dark: '#1B5E20'
+      main: '#FF8DAD',
+      light: '#FFB3C6',
+      dark: '#FF6B99'
     },
     secondary: {
-      main: '#FBD6E3',
+      main: '#FFC9DD',
       light: '#FFE6F0',
-      dark: '#E8B4C9'
+      dark: '#FFB3C6'
     },
     background: {
       default: 'transparent',
@@ -65,7 +65,7 @@ function App() {
           },
           success: {
             iconTheme: {
-              primary: '#2E7D32',
+              primary: '#FF8DAD',
               secondary: '#fff'
             }
           },

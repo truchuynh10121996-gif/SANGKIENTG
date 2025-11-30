@@ -30,10 +30,31 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    // Cho phép requests không có origin (mobile apps, Postman, etc.)
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Development mode: cho phép tất cả origins từ localhost và local network
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+    if (isDevelopment) {
+      // Cho phép localhost, 127.0.0.1, và IP trong mạng local (192.168.x.x, 10.x.x.x)
+      if (origin.match(/^http:\/\/(localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+)(:\d+)?$/)) {
+        return callback(null, true);
+      }
+    }
+
+    // Kiểm tra allowed origins
+    if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      // Development: log warning nhưng vẫn cho phép
+      if (isDevelopment) {
+        console.warn(`CORS Warning: Origin ${origin} not in allowed list, but allowing in development mode`);
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
     }
   },
   credentials: true

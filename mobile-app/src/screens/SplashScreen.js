@@ -100,14 +100,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#2E7D32',
+    color: '#FF8DAD',
     marginTop: 20,
     textAlign: 'center',
     letterSpacing: 1
   },
   subtitle: {
     fontSize: 16,
-    color: '#1B5E20',
+    color: '#FF6B99',
     marginTop: 10,
     textAlign: 'center'
   }

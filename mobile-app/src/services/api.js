@@ -1,8 +1,29 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 // Cấu hình API base URL
-// Thay đổi địa chỉ này theo backend của bạn
-const API_BASE_URL = 'http://localhost:5000/api';
+// Tự động detect địa chỉ backend dựa trên platform
+const getApiUrl = () => {
+  // Nếu chạy trên web (Expo web), dùng localhost
+  if (Platform.OS === 'web') {
+    return 'http://localhost:5000/api';
+  }
+
+  // Nếu chạy trên thiết bị thật hoặc emulator
+  // Lấy IP từ Expo Dev Server
+  const { expoConfig } = Constants;
+  const host = expoConfig?.hostUri?.split(':')[0];
+
+  if (host) {
+    return `http://${host}:5000/api`;
+  }
+
+  // Fallback về localhost (cho trường hợp production hoặc không detect được)
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiUrl();
 
 // Tạo axios instance
 const api = axios.create({

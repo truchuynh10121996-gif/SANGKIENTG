@@ -105,12 +105,12 @@ export default function VoiceRecorder({ language, onTranscriptionComplete }) {
       disabled={isProcessing}
     >
       {isProcessing ? (
-        <ActivityIndicator size="small" color="#2E7D32" />
+        <ActivityIndicator size="small" color="#FF8DAD" />
       ) : (
         <Ionicons
           name={isRecording ? 'stop-circle' : 'mic'}
           size={24}
-          color={isRecording ? '#D32F2F' : '#2E7D32'}
+          color={isRecording ? '#D32F2F' : '#FF8DAD'}
         />
       )}
     </TouchableOpacity>

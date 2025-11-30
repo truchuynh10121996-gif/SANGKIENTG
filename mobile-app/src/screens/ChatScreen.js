@@ -137,7 +137,7 @@ export default function ChatScreen({ route, navigation }) {
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color="#2E7D32" />
+            <Ionicons name="arrow-back" size={24} color="#FF8DAD" />
           </TouchableOpacity>
 
           <View style={styles.headerTitleContainer}>
@@ -146,7 +146,7 @@ export default function ChatScreen({ route, navigation }) {
           </View>
 
           <TouchableOpacity style={styles.infoButton}>
-            <Ionicons name="information-circle" size={24} color="#2E7D32" />
+            <Ionicons name="information-circle" size={24} color="#FF8DAD" />
           </TouchableOpacity>
         </View>
 
@@ -167,7 +167,7 @@ export default function ChatScreen({ route, navigation }) {
 
           {isLoading && (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="small" color="#2E7D32" />
+              <ActivityIndicator size="small" color="#FF8DAD" />
               <Text style={styles.loadingText}>Đang suy nghĩ...</Text>
             </View>
           )}
@@ -205,7 +205,7 @@ export default function ChatScreen({ route, navigation }) {
               <Ionicons
                 name="send"
                 size={24}
-                color={inputText.trim() ? '#2E7D32' : '#CCC'}
+                color={inputText.trim() ? '#FF8DAD' : '#CCC'}
               />
             </TouchableOpacity>
           </View>
@@ -238,11 +238,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2E7D32'
+    color: '#FF8DAD'
   },
   headerSubtitle: {
     fontSize: 12,
-    color: '#1B5E20'
+    color: '#FF6B99'
   },
   infoButton: {
     padding: 5
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginLeft: 10,
-    color: '#2E7D32',
+    color: '#FF8DAD',
     fontSize: 14
   },
   inputContainer: {

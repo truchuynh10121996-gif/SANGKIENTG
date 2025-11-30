@@ -49,8 +49,8 @@ export default function Dashboard() {
       title: 'Tổng Q&A',
       value: stats.totalQA,
       icon: <QuestionAnswer sx={{ fontSize: 40 }} />,
-      color: '#2E7D32',
-      bg: 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)'
+      color: '#FF8DAD',
+      bg: 'linear-gradient(135deg, #FF8DAD 0%, #FF6B99 100%)'
     },
     {
       title: 'Kịch bản lừa đảo',
@@ -83,7 +83,7 @@ export default function Dashboard() {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#2E7D32' }}>
+      <Typography variant="h4" sx={{ mb: 3, fontWeight: 700, color: '#FF8DAD' }}>
         📊 Dashboard
       </Typography>
 
@@ -127,7 +127,7 @@ export default function Dashboard() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#2E7D32' }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#FF8DAD' }}>
               Phân bố Q&A theo ngôn ngữ
             </Typography>
             <ResponsiveContainer width="100%" height={300}>
@@ -137,7 +137,7 @@ export default function Dashboard() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="qas" fill="#2E7D32" name="Số lượng Q&A" />
+                <Bar dataKey="qas" fill="#FF8DAD" name="Số lượng Q&A" />
               </BarChart>
             </ResponsiveContainer>
           </Paper>
@@ -145,7 +145,7 @@ export default function Dashboard() {
 
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, borderRadius: 3, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#2E7D32' }}>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#FF8DAD' }}>
               Hướng dẫn sử dụng
             </Typography>
             <Box>
