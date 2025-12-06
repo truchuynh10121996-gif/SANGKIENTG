@@ -12,8 +12,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
  */
 async function generateResponse(userMessage, systemPrompt, conversationHistory = []) {
   try {
-    // Sử dụng model Gemini 1.5 Pro (model ổn định, được hỗ trợ với @google/generative-ai v0.24+)
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    // Sử dụng model Gemini 1.5 Flash (model ổn định, nhanh, được hỗ trợ đầy đủ)
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     // Nếu có lịch sử hội thoại, sử dụng chat mode
     if (conversationHistory && conversationHistory.length > 0) {
