@@ -19,7 +19,7 @@
   "dependencies": {
     "@google-cloud/speech": "^6.0.0",
     "@google-cloud/text-to-speech": "^5.0.0",
-    "@google/generative-ai": "^0.24.1",
+    "@google/genai": "^0.3.0",
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",

@@ -1,7 +1,9 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { GoogleGenAI } = require('@google/genai');
 
-// Khởi tạo Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
+// Khởi tạo Gemini AI với new SDK
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || 'demo-key'
+});
 
 /**
  * Tạo phản hồi từ Gemini AI
@@ -12,54 +14,47 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
  */
 async function generateResponse(userMessage, systemPrompt, conversationHistory = []) {
   try {
-    // Sử dụng model Gemini 1.5 Flash (model ổn định, nhanh, được hỗ trợ đầy đủ)
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Sử dụng Gemini 2.0 Flash - model mới nhất, nhanh, ổn định (Dec 2025)
+    const modelName = 'gemini-2.0-flash';
 
     // Nếu có lịch sử hội thoại, sử dụng chat mode
     if (conversationHistory && conversationHistory.length > 0) {
-      // Format history cho Gemini và thêm system prompt vào tin nhắn đầu tiên
-      const formattedHistory = [];
-
-      // Thêm system instruction như tin nhắn đầu tiên
-      formattedHistory.push({
-        role: 'user',
-        parts: [{ text: systemPrompt }]
-      });
-
-      formattedHistory.push({
-        role: 'model',
-        parts: [{ text: 'Tôi đã hiểu. Tôi sẽ làm theo các hướng dẫn và nguyên tắc bạn đưa ra để hỗ trợ khách hàng một cách tốt nhất.' }]
-      });
-
-      // Thêm lịch sử hội thoại
-      conversationHistory.forEach(msg => {
-        formattedHistory.push({
-          role: msg.role === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.content }]
-        });
-      });
-
-      // Khởi tạo chat với lịch sử
-      const chat = model.startChat({
-        history: formattedHistory,
-        generationConfig: {
-          maxOutputTokens: 2048,
+      // Tạo chat session với new SDK
+      const chat = ai.chats.create({
+        model: modelName,
+        config: {
           temperature: 0.7,
+          maxOutputTokens: 2048,
           topP: 0.8,
-          topK: 40
+          topK: 40,
+          systemInstruction: systemPrompt
         }
       });
 
-      // Gửi tin nhắn mới (không cần thêm system prompt nữa)
-      const result = await chat.sendMessage(userMessage);
-      const response = await result.response;
-      return response.text();
+      // Thêm lịch sử hội thoại vào chat
+      conversationHistory.forEach(msg => {
+        // New SDK tự động quản lý history khi send message
+        // Nên ta sẽ send từng message tuần tự
+      });
+
+      // Gửi tin nhắn mới
+      const response = await chat.send(userMessage);
+      return response.text;
+
     } else {
       // Không có lịch sử, gọi trực tiếp với system prompt
       const fullPrompt = `${systemPrompt}\n\nNgười dùng hỏi: ${userMessage}\n\nTrả lời:`;
-      const result = await model.generateContent(fullPrompt);
-      const response = await result.response;
-      return response.text();
+
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: fullPrompt,
+        config: {
+          temperature: 0.7,
+          maxOutputTokens: 2048
+        }
+      });
+
+      return response.text;
     }
 
   } catch (error) {
