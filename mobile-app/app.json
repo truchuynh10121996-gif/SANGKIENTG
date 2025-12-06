@@ -35,17 +35,6 @@
     "web": {
       "favicon": "./assets/logo-agribank.png"
     },
-    "sdkVersion": "54.0.0",
-    "plugins": [
-      "expo-speech",
-      [
-        "@react-native-voice/voice",
-        {
-          "microphonePermission": "Ung dung can quyen microphone de ghi am giong noi cua ban",
-          "speechRecognitionPermission": "Ung dung can quyen nhan dien giong noi de chuyen doi giong noi thanh van ban"
-        }
-      ]
-    ],
     "extra": {
       "eas": {
         "projectId": ""

@@ -4,15 +4,16 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "start:clear": "expo start --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:dev:ios": "eas build --profile development --platform ios",
     "build:dev:android": "eas build --profile development --platform android",
-    "eas:init": "cross-env NODE_OPTIONS=--no-experimental-strip-types npx eas init",
-    "eas:build": "cross-env NODE_OPTIONS=--no-experimental-strip-types npx eas build",
-    "eas:update": "cross-env NODE_OPTIONS=--no-experimental-strip-types npx eas update",
-    "expo:config": "cross-env NODE_OPTIONS=--no-experimental-strip-types npx expo config"
+    "eas:init": "node --no-experimental-strip-types ./node_modules/.bin/eas init",
+    "eas:build": "node --no-experimental-strip-types ./node_modules/.bin/eas build",
+    "eas:update": "node --no-experimental-strip-types ./node_modules/.bin/eas update",
+    "expo:config": "node --no-experimental-strip-types ./node_modules/.bin/expo config"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
@@ -40,8 +41,7 @@
     "react-native-web": "^0.21.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "cross-env": "^7.0.3"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
