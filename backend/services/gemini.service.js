@@ -12,10 +12,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
  */
 async function generateResponse(userMessage, systemPrompt, conversationHistory = []) {
   try {
-    // Sử dụng Gemini 1.5 Pro - model ổn định, chất lượng cao
-    // gemini-1.5-flash không còn khả dụng trên API v1beta
+    // Sử dụng naming convention mới: models/gemini-1.5-pro-latest
+    // API v1beta yêu cầu prefix "models/" và suffix "-latest"
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-pro',
+      model: 'models/gemini-1.5-pro-latest',
       systemInstruction: systemPrompt
     });
 
