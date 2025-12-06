@@ -15,7 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import ChatBubble from '../components/ChatBubble';
 import VoiceRecorder from '../components/VoiceRecorder';
-import { sendMessage, synthesizeSpeech } from '../services/api';
+import { sendMessage } from '../services/api';
 
 export default function ChatScreen({ route, navigation }) {
   const { language = 'vi' } = route.params || {};

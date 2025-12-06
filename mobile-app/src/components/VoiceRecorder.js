@@ -1,89 +1,106 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, StyleSheet, Alert, ActivityIndicator, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
-import { transcribeAudio } from '../services/api';
+import Voice from '@react-native-voice/voice';
 
 export default function VoiceRecorder({ language, onTranscriptionComplete }) {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [recording, setRecording] = useState(null);
+  const [partialResults, setPartialResults] = useState('');
+
+  // Map language code
+  const getVoiceLanguage = (lang) => {
+    const languageMap = {
+      'vi': 'vi-VN',
+      'en': 'en-US',
+      'km': 'km-KH'
+    };
+    return languageMap[lang] || 'vi-VN';
+  };
+
+  useEffect(() => {
+    // Đăng ký các event handlers
+    Voice.onSpeechStart = onSpeechStart;
+    Voice.onSpeechEnd = onSpeechEnd;
+    Voice.onSpeechResults = onSpeechResults;
+    Voice.onSpeechPartialResults = onSpeechPartialResults;
+    Voice.onSpeechError = onSpeechError;
+
+    // Cleanup khi component unmount
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
+  const onSpeechStart = (e) => {
+    console.log('Speech started');
+    setIsRecording(true);
+  };
+
+  const onSpeechEnd = (e) => {
+    console.log('Speech ended');
+    setIsRecording(false);
+  };
+
+  const onSpeechResults = (e) => {
+    console.log('Speech results:', e.value);
+    setIsProcessing(false);
+    if (e.value && e.value.length > 0) {
+      // Lấy kết quả tốt nhất (đầu tiên)
+      onTranscriptionComplete(e.value[0]);
+    }
+  };
+
+  const onSpeechPartialResults = (e) => {
+    if (e.value && e.value.length > 0) {
+      setPartialResults(e.value[0]);
+    }
+  };
+
+  const onSpeechError = (e) => {
+    console.error('Speech error:', e.error);
+    setIsRecording(false);
+    setIsProcessing(false);
+
+    // Hiển thị lỗi thân thiện
+    let errorMessage = 'Không thể nhận diện giọng nói. Vui lòng thử lại.';
+
+    if (e.error?.code === 'recognition_fail') {
+      errorMessage = 'Không nghe rõ. Vui lòng nói to và rõ hơn.';
+    } else if (e.error?.code === 'no_match') {
+      errorMessage = 'Không nhận diện được. Vui lòng thử lại.';
+    } else if (e.error?.code === 'network') {
+      errorMessage = 'Lỗi kết nối mạng. Vui lòng kiểm tra internet.';
+    } else if (e.error?.code === 'permission') {
+      errorMessage = 'Vui lòng cấp quyền sử dụng microphone.';
+    }
+
+    Alert.alert('Thông báo', errorMessage);
+  };
 
   const startRecording = async () => {
     try {
-      // Request permissions
-      const { status } = await Audio.requestPermissionsAsync();
+      setIsProcessing(true);
+      setPartialResults('');
 
-      if (status !== 'granted') {
-        Alert.alert(
-          'Quyền truy cập',
-          'Vui lòng cấp quyền truy cập microphone để sử dụng tính năng ghi âm.'
-        );
-        return;
-      }
-
-      // Configure audio mode
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true
-      });
-
-      // Start recording
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
-
-      setRecording(recording);
-      setIsRecording(true);
+      await Voice.start(getVoiceLanguage(language));
 
     } catch (error) {
       console.error('Failed to start recording:', error);
+      setIsProcessing(false);
       Alert.alert('Lỗi', 'Không thể bắt đầu ghi âm. Vui lòng thử lại.');
     }
   };
 
   const stopRecording = async () => {
     try {
-      if (!recording) return;
-
+      await Voice.stop();
       setIsRecording(false);
-      setIsProcessing(true);
-
-      // Stop recording
-      await recording.stopAndUnloadAsync();
-      const uri = recording.getURI();
-
-      // Get audio file
-      const audioFile = await fetch(uri);
-      const audioBlob = await audioFile.blob();
-
-      // Convert to FormData
-      const formData = new FormData();
-      formData.append('audio', {
-        uri: uri,
-        type: 'audio/mp3',
-        name: 'recording.mp3'
-      });
-      formData.append('language', language);
-
-      // Send to API
-      const result = await transcribeAudio(formData);
-
-      if (result.transcription && result.transcription.text) {
-        onTranscriptionComplete(result.transcription.text);
-      } else {
-        Alert.alert(
-          'Thông báo',
-          'Không thể nhận diện giọng nói. Vui lòng thử lại.'
-        );
-      }
-
+      // Kết quả sẽ được trả về qua onSpeechResults
     } catch (error) {
       console.error('Failed to stop recording:', error);
-      Alert.alert('Lỗi', 'Không thể xử lý ghi âm. Vui lòng thử lại.');
-    } finally {
+      setIsRecording(false);
       setIsProcessing(false);
-      setRecording(null);
     }
   };
 
@@ -102,9 +119,9 @@ export default function VoiceRecorder({ language, onTranscriptionComplete }) {
         isRecording && styles.buttonRecording
       ]}
       onPress={handlePress}
-      disabled={isProcessing}
+      disabled={isProcessing && !isRecording}
     >
-      {isProcessing ? (
+      {isProcessing && !isRecording ? (
         <ActivityIndicator size="small" color="#FF8DAD" />
       ) : (
         <Ionicons
