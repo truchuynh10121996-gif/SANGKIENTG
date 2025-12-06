@@ -16,7 +16,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.agribank.digitalguard"
+      "bundleIdentifier": "com.agribank.digitalguard",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Ứng dụng cần quyền microphone để ghi âm giọng nói của bạn",
+        "NSSpeechRecognitionUsageDescription": "Ứng dụng cần quyền nhận diện giọng nói để chuyển đổi giọng nói thành văn bản"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -33,6 +37,21 @@
     "web": {
       "favicon": "./assets/logo-agribank.png"
     },
-    "sdkVersion": "54.0.0"
+    "sdkVersion": "54.0.0",
+    "plugins": [
+      "expo-speech",
+      [
+        "@react-native-voice/voice",
+        {
+          "microphonePermission": "Ứng dụng cần quyền microphone để ghi âm giọng nói của bạn",
+          "speechRecognitionPermission": "Ứng dụng cần quyền nhận diện giọng nói để chuyển đổi giọng nói thành văn bản"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    }
   }
 }

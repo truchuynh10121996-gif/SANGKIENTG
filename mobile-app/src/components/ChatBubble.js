@@ -1,67 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Audio } from 'expo-av';
-import { synthesizeSpeech } from '../services/api';
+import * as Speech from 'expo-speech';
 
 export default function ChatBubble({ message, language }) {
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [isLoadingAudio, setIsLoadingAudio] = useState(false);
-  const [sound, setSound] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
   const isBot = message.sender === 'bot';
   const isFraud = message.isFraudAlert;
 
+  // Cleanup khi component unmount
+  useEffect(() => {
+    return () => {
+      Speech.stop();
+    };
+  }, []);
+
+  // Map language code sang voice language
+  const getVoiceLanguage = (lang) => {
+    const languageMap = {
+      'vi': 'vi-VN',
+      'en': 'en-US',
+      'km': 'km-KH' // Khmer - có thể không được hỗ trợ trên mọi thiết bị
+    };
+    return languageMap[lang] || 'vi-VN';
+  };
+
   const handlePlayAudio = async () => {
     try {
-      if (isPlayingAudio && sound) {
-        // Stop audio
-        await sound.stopAsync();
-        await sound.unloadAsync();
-        setSound(null);
-        setIsPlayingAudio(false);
+      // Nếu đang nói thì dừng lại
+      const speaking = await Speech.isSpeakingAsync();
+      if (speaking) {
+        await Speech.stop();
+        setIsSpeaking(false);
         return;
       }
 
-      setIsLoadingAudio(true);
+      setIsSpeaking(true);
 
-      // Get audio from API
-      const audioData = await synthesizeSpeech({
-        text: message.text,
-        language,
-        gender: 'FEMALE'
-      });
-
-      // Convert base64 to audio
-      const { sound: audioSound } = await Audio.Sound.createAsync(
-        { uri: `data:audio/mp3;base64,${audioData.audioContent}` },
-        { shouldPlay: true }
-      );
-
-      setSound(audioSound);
-      setIsPlayingAudio(true);
-
-      // Handle playback status
-      audioSound.setOnPlaybackStatusUpdate((status) => {
-        if (status.didJustFinish) {
-          setIsPlayingAudio(false);
-          audioSound.unloadAsync();
-          setSound(null);
+      // Sử dụng expo-speech để đọc text
+      Speech.speak(message.text, {
+        language: getVoiceLanguage(language),
+        pitch: 1.0,
+        rate: Platform.OS === 'ios' ? 0.5 : 0.9, // iOS nói nhanh hơn nên giảm rate
+        onStart: () => {
+          setIsSpeaking(true);
+        },
+        onDone: () => {
+          setIsSpeaking(false);
+        },
+        onStopped: () => {
+          setIsSpeaking(false);
+        },
+        onError: (error) => {
+          console.error('Speech error:', error);
+          setIsSpeaking(false);
         }
       });
 
     } catch (error) {
       console.error('Play audio error:', error);
-      setIsPlayingAudio(false);
-    } finally {
-      setIsLoadingAudio(false);
+      setIsSpeaking(false);
     }
   };
 
@@ -91,17 +98,12 @@ export default function ChatBubble({ message, language }) {
               <TouchableOpacity
                 style={styles.speakerButton}
                 onPress={handlePlayAudio}
-                disabled={isLoadingAudio}
               >
-                {isLoadingAudio ? (
-                  <ActivityIndicator size="small" color="#FF8DAD" />
-                ) : (
-                  <Ionicons
-                    name={isPlayingAudio ? 'stop-circle' : 'volume-high'}
-                    size={20}
-                    color="#FF8DAD"
-                  />
-                )}
+                <Ionicons
+                  name={isSpeaking ? 'stop-circle' : 'volume-high'}
+                  size={20}
+                  color={isSpeaking ? '#D32F2F' : '#FF8DAD'}
+                />
               </TouchableOpacity>
             </View>
           </View>
