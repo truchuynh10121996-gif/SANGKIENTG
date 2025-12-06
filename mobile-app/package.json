@@ -10,10 +10,10 @@
     "web": "expo start --web",
     "build:dev:ios": "eas build --profile development --platform ios",
     "build:dev:android": "eas build --profile development --platform android",
-    "eas:init": "node --no-experimental-strip-types ./node_modules/.bin/eas init",
-    "eas:build": "node --no-experimental-strip-types ./node_modules/.bin/eas build",
-    "eas:update": "node --no-experimental-strip-types ./node_modules/.bin/eas update",
-    "expo:config": "node --no-experimental-strip-types ./node_modules/.bin/expo config"
+    "eas:init": "npx eas init",
+    "eas:build": "npx eas build",
+    "eas:update": "npx eas update",
+    "expo:config": "npx expo config"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
@@ -41,7 +41,8 @@
     "react-native-web": "^0.21.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "eas-cli": "^15.0.0"
   },
   "private": true
 }
