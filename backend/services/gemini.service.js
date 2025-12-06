@@ -7,22 +7,60 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
  * Tạo phản hồi từ Gemini AI
  * @param {string} userMessage - Tin nhắn từ người dùng
  * @param {string} systemPrompt - System prompt với context
+ * @param {Array} conversationHistory - Lịch sử hội thoại (optional)
  * @returns {Promise<string>} - Phản hồi từ AI
  */
-async function generateResponse(userMessage, systemPrompt) {
+async function generateResponse(userMessage, systemPrompt, conversationHistory = []) {
   try {
     // Sử dụng model Gemini Pro
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
-    // Tạo prompt đầy đủ
-    const fullPrompt = `${systemPrompt}\n\nNgười dùng hỏi: ${userMessage}\n\nTrả lời:`;
+    // Nếu có lịch sử hội thoại, sử dụng chat mode
+    if (conversationHistory && conversationHistory.length > 0) {
+      // Format history cho Gemini và thêm system prompt vào tin nhắn đầu tiên
+      const formattedHistory = [];
 
-    // Gọi API
-    const result = await model.generateContent(fullPrompt);
-    const response = await result.response;
-    const text = response.text();
+      // Thêm system instruction như tin nhắn đầu tiên
+      formattedHistory.push({
+        role: 'user',
+        parts: [{ text: systemPrompt }]
+      });
 
-    return text;
+      formattedHistory.push({
+        role: 'model',
+        parts: [{ text: 'Tôi đã hiểu. Tôi sẽ làm theo các hướng dẫn và nguyên tắc bạn đưa ra để hỗ trợ khách hàng một cách tốt nhất.' }]
+      });
+
+      // Thêm lịch sử hội thoại
+      conversationHistory.forEach(msg => {
+        formattedHistory.push({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.content }]
+        });
+      });
+
+      // Khởi tạo chat với lịch sử
+      const chat = model.startChat({
+        history: formattedHistory,
+        generationConfig: {
+          maxOutputTokens: 2048,
+          temperature: 0.7,
+          topP: 0.8,
+          topK: 40
+        }
+      });
+
+      // Gửi tin nhắn mới (không cần thêm system prompt nữa)
+      const result = await chat.sendMessage(userMessage);
+      const response = await result.response;
+      return response.text();
+    } else {
+      // Không có lịch sử, gọi trực tiếp với system prompt
+      const fullPrompt = `${systemPrompt}\n\nNgười dùng hỏi: ${userMessage}\n\nTrả lời:`;
+      const result = await model.generateContent(fullPrompt);
+      const response = await result.response;
+      return response.text();
+    }
 
   } catch (error) {
     console.error('Gemini API error:', error);
