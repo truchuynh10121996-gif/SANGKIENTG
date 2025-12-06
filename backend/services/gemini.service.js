@@ -12,10 +12,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'demo-key');
  */
 async function generateResponse(userMessage, systemPrompt, conversationHistory = []) {
   try {
-    // Sử dụng Gemini 1.5 Flash Latest - model ổn định, nhanh và chất lượng cao
+    // Sử dụng Gemini 2.0 Flash - model mới nhất, nhanh và chất lượng cao
     // Model name phải chính xác theo Google AI API documentation
     const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash-latest',
+      model: 'gemini-2.0-flash',
       systemInstruction: systemPrompt
     });
 
